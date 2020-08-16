@@ -43,18 +43,18 @@ const webpackConfig = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: "./plugin/newtab.html",
-      filename: 'newtab.html',
-      inject: 'body',
-      hash: true,
-      favicon: false,
-      minify: false,
-      xhtml: true,
-      cache: true,
-      title: "mixingfeng",
-      showErrors: true
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: "./plugin/js/newtab.html",
+    //   filename: 'newtab.html',
+    //   inject: 'body',
+    //   hash: true,
+    //   favicon: false,
+    //   minify: false,
+    //   xhtml: true,
+    //   cache: true,
+    //   title: "mixingfeng",
+    //   showErrors: true
+    // }),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],

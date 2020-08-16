@@ -2,13 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Main from "./main";
 
+const debug = false;
+
 window.onload = () => {
-  const node = document.querySelector('#mother');
-  if (node) {
-    document.body.removeChild(node);
+  if (location.host === "newtab" || location.host === "local-ntp" || /chrome\-extension/.test(location.origin) || debug) {
+    const ele = document.createElement('div');
+    ele.id = 'svg';
+    document.body.appendChild(ele);
+    ReactDOM.render(<Main />, document.querySelector('#svg'));
+  } else {
+    //
   }
-  const ele = document.createElement('div');
-  ele.id = 'svg';
-  document.body.appendChild(ele);
-  ReactDOM.render(<Main />, document.querySelector('#svg'));
 };
