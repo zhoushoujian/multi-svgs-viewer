@@ -1,4 +1,4 @@
-.plugin-header-init {
+.svg-viewer-chrome-plugin-css-style-plugin-header-init {
   text-align: center;
   padding-top: 32px;
   cursor: pointer;
@@ -6,14 +6,14 @@
   font-weight: 600;
 }
 
-.show-svg-container {
+.svg-viewer-chrome-plugin-css-style-show-svg-container {
   padding: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.multi-svg-container {
+.svg-viewer-chrome-plugin-css-style-multi-svg-container {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -21,7 +21,7 @@
   align-items: center;
 }
 
-.upload-button-init {
+.svg-viewer-chrome-plugin-css-style-upload-button-init {
   display: flex;
   justify-content: center;
   cursor: pointer;
@@ -34,7 +34,7 @@
   text-align: center
 }
 
-.upload-button-init-middle {
+.svg-viewer-chrome-plugin-css-style-upload-button-init-middle {
   display: flex;
   font-weight: lighter;
   align-items: center;
@@ -42,18 +42,18 @@
   flex-direction: column;
 }
 
-.plugin-header-content {
+.svg-viewer-chrome-plugin-css-style-plugin-header-content {
   font-size: 20px;
   font-weight: 600;
   line-height: 25px;
 }
 
-.svg-items-container {
+.svg-viewer-chrome-plugin-css-style-svg-items-container {
   display: flex;
   flex-wrap: wrap;
 }
 
-.svg-items {
+.svg-viewer-chrome-plugin-css-style-svg-items {
   width: 200px;
   height: 200px;
   padding: 15px;
@@ -66,7 +66,7 @@
   justify-content: space-between;
 }
 
-.filename {
+.svg-viewer-chrome-plugin-css-style-filename {
   font-size: 18px;
   text-align: center;
   font-weight: 600;
@@ -77,12 +77,12 @@
   text-overflow: ellipsis;
 }
 
-.react-svg {
+.svg-viewer-chrome-plugin-css-style-react-svg {
   width: 150px;
   height: 150px;
 }
 
-.upload-button-container {
+.svg-viewer-chrome-plugin-css-style-upload-button-container {
   width: 200px;
   height: 200px;
   display: flex;
@@ -95,27 +95,27 @@
   cursor: pointer;
 }
 
-.plus {
+.svg-viewer-chrome-plugin-css-style-plus {
   text-align: center;
   font-size: 36px;
   padding-top: 56px;
 }
 
-.plus-text {
+.svg-viewer-chrome-plugin-css-style-plus-text {
   text-align: center;
   margin-top: 15px;
   line-height: 24px;
   padding: 0 15px;
 }
 
-.upload-button-content-border {
+.svg-viewer-chrome-plugin-css-style-upload-button-content-border {
   width: 230px;
   height: 230px;
   cursor: pointer;
   margin-top: -15px;
 }
 
-.drop-file-here {
+.svg-viewer-chrome-plugin-css-style-drop-file-here {
   display: flex;
   align-items: center;
   justify-content: center;

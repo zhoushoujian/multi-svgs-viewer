@@ -7,17 +7,6 @@
     "build:production": "cross-env NODE_ENV=production webpack --progress --colors",
     "build:development": "webpack --progress --colors"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "cross-env-shell \"commitlint -e $HUSKY_GIT_PARAMS\""
-    }
-  },
-  "lint-staged": {
-    "packages/**/*.{ts,tsx}": [
-      "npm run codecheck"
-    ]
-  },
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
