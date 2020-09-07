@@ -121,3 +121,10 @@
   justify-content: center;
   font-size: 18px;
 }
+
+.svg-viewer-chrome-plugin-css-style-tool {
+  position: absolute;
+  display: flex;
+  font-size: 36px;
+  right: 50px;
+}
