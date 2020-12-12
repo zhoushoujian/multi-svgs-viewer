@@ -1,6 +1,5 @@
 const path = require('path');
 const tsImportPluginFactory = require('ts-import-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const dev = process.env.NODE_ENV !== "production" ? true : false;
 console.info("dev", dev);
@@ -42,26 +41,12 @@ const webpackConfig = {
       }
     ]
   },
-  plugins: [
-    // new HtmlWebpackPlugin({
-    //   template: "./plugin/js/newtab.html",
-    //   filename: 'newtab.html',
-    //   inject: 'body',
-    //   hash: true,
-    //   favicon: false,
-    //   minify: false,
-    //   xhtml: true,
-    //   cache: true,
-    //   title: "mixingfeng",
-    //   showErrors: true
-    // }),
-  ],
+  plugins: [],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   optimization: {
     splitChunks: {
-      // name: '',
       chunks: 'all',
       minChunks: 1,
       automaticNameDelimiter: '-',
@@ -78,6 +63,6 @@ const webpackConfig = {
       }
     }
   },
-}
+};
 
 module.exports = webpackConfig;

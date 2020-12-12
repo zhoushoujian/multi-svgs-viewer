@@ -14,8 +14,9 @@ function MyDropzone() {
 
   const onDrop = useCallback(
     acceptedFiles => {
-      console.log('files', acceptedFiles);
+      console.log('selected files', acceptedFiles);
       acceptedFiles = acceptedFiles.filter(item => item.type === 'image/svg+xml');
+      console.log('svg files', acceptedFiles);
       setSvgFiles([...svgFiles, ...acceptedFiles]);
     },
     [svgFiles]

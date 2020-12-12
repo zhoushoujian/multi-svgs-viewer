@@ -5,6 +5,7 @@ import Main from "./main";
 const debug = false;
 
 window.onload = () => {
+  // eslint-disable-next-line no-useless-escape
   if (location.host === "newtab" || location.host === "local-ntp" || /chrome\-extension/.test(location.origin) || debug) {
     const ele = document.createElement('div');
     ele.id = 'svg';
