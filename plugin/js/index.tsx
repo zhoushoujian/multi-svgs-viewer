@@ -9,6 +9,7 @@ window.onload = () => {
     || location.host === "local-ntp"
     || location.host === ""
     || location.protocol === "file:"
+    || location.href === "https://www.zhoushoujian.com/svg/"
     // eslint-disable-next-line no-useless-escape
     || /chrome\-extension/.test(location.origin)
     || debug) {
