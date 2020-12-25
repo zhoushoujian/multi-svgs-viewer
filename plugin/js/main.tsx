@@ -1,8 +1,10 @@
-import React, { useCallback, useState, Fragment } from 'react';
+import React, { useCallback, useState, Fragment, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 function MyDropzone() {
-  const [svgFiles, setSvgFiles] = useState<any[]>([]);
+  const [availableFiles, setAvailableFiles] = useState<any[]>([]);
+  const [selectedSvgBtn, setSelectedSvgBtn] = useState(true);
+  const [selectedGifBtn, setSelectedGifBtn] = useState(true);
   const [container, setContainer] = useState({
     width: 200,
     height: 200
@@ -12,14 +14,33 @@ function MyDropzone() {
     height: 150
   });
 
+  useEffect(() => {
+    availableFiles.forEach(item => {
+      if (item.type === 'image/svg+xml') {
+        item.visible = selectedSvgBtn ? true : false;
+      } else if (item.type === 'image/gif') {
+        item.visible = selectedGifBtn ? true : false;
+      }
+    });
+    console.log('filter changed, files: ', availableFiles);
+    setAvailableFiles([...availableFiles]);
+  }, [selectedSvgBtn, selectedGifBtn]);
+
   const onDrop = useCallback(
     acceptedFiles => {
-      console.log('selected files', acceptedFiles);
-      acceptedFiles = acceptedFiles.filter(item => item.type === 'image/svg+xml');
-      console.log('svg files', acceptedFiles);
-      setSvgFiles([...svgFiles, ...acceptedFiles]);
+      console.log('selected files: ', acceptedFiles);
+      acceptedFiles = acceptedFiles.filter(item => (item.type === 'image/svg+xml' || item.type === 'image/gif'));
+      acceptedFiles.forEach(item => {
+        if (item.type === 'image/svg+xml') {
+          item.visible = selectedSvgBtn ? true : false;
+        } else if (item.type === 'image/gif') {
+          item.visible = selectedGifBtn ? true : false;
+        }
+      });
+      console.log('available files: ', acceptedFiles);
+      setAvailableFiles([...availableFiles, ...acceptedFiles]);
     },
-    [svgFiles]
+    [availableFiles]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -47,9 +68,10 @@ function MyDropzone() {
     });
   };
 
+  const availableFilesVisible = availableFiles.filter(item => item.visible);
   return (
     <div className="svg-viewer-chrome-plugin-css-style-show-svg-container">
-      {!svgFiles.length ? (
+      {(!availableFilesVisible.length && selectedSvgBtn && selectedSvgBtn) ? (
         <div
           title={`${isDragActive
             ? 'Drop the files here ...'
@@ -58,7 +80,7 @@ function MyDropzone() {
           <div {...getRootProps({ accept: 'image/svg+xml' })}>
             <input {...getInputProps()} />
             <div className="svg-viewer-chrome-plugin-css-style-plugin-header-init">
-              Multiple SVGS Viewer
+              Multiple SVG And GIF Viewer
             </div>
             {isDragActive ? (
               <div className="svg-viewer-chrome-plugin-css-style-upload-button-init">
@@ -67,7 +89,7 @@ function MyDropzone() {
             ) : (<div className="svg-viewer-chrome-plugin-css-style-upload-button-init">
               <div className="svg-viewer-chrome-plugin-css-style-upload-button-init-middle">
                 <div style={{ fontSize: '72px' }}>+</div>
-                <div style={{ textAlign: 'center' }}>
+                <div style={{ textAlign: 'center', fontWeight: 600, fontSize: 20 }}>
                   Drag some files here, or click to select files
                   </div>
               </div>
@@ -76,15 +98,21 @@ function MyDropzone() {
         </div>
       ) : (<Fragment>
         <h2 className="svg-viewer-chrome-plugin-css-style-plugin-header-content">
-          Multiple SVGS Viewer
+          Multiple SVG And GIF Viewer
         </h2>
         <div className="svg-viewer-chrome-plugin-css-style-tool">
-          <div style={{ marginRight: 20, cursor: 'pointer' }} onClick={zoomOut}>
-            +
-            </div>
-          <div style={{ cursor: 'pointer' }} onClick={zoomIn}>
-            -
-            </div>
+          <div
+            className="svg-viewer-chrome-plugin-css-style-file-type-button"
+            style={{ backgroundColor: selectedSvgBtn ? "#ccc" : "#fff", color: selectedSvgBtn ? "#fff" : "#ccc" }}
+            onClick={() => setSelectedSvgBtn(!selectedSvgBtn)}
+            title="show svg">SVG</div>
+          <div
+            className="svg-viewer-chrome-plugin-css-style-file-type-button"
+            style={{ backgroundColor: selectedGifBtn ? "#ccc" : "#fff", color: selectedGifBtn ? "#fff" : "#ccc" }}
+            onClick={() => setSelectedGifBtn(!selectedGifBtn)}
+            title="show gif">GIF</div>
+          <div style={{ marginRight: 20, cursor: 'pointer' }} onClick={zoomOut} title="zoom out">+</div>
+          <div style={{ cursor: 'pointer' }} onClick={zoomIn} title="zoom in">-</div>
         </div>
         <div
           style={{ width: '100%' }}
@@ -93,7 +121,7 @@ function MyDropzone() {
             : 'Drag some files here, or click to select files'}`}
           className="svg-viewer-chrome-plugin-css-style-multi-svg-container">
           <div className="svg-viewer-chrome-plugin-css-style-svg-items-container">
-            {svgFiles.map((file, index) => (
+            {availableFilesVisible.map((file, index) => (
               <div
                 className="svg-viewer-chrome-plugin-css-style-svg-items"
                 style={{ width: container.width, height: container.height }}

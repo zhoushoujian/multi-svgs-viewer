@@ -1,9 +1,9 @@
-# multi-svgs-viewer
+# multi-svg-and-gif-viewer
 
 ## BACKGROUND
 
-Due to windows is not able to preview svg by default, so if we have many svgs in folder, it's hard to find which svg we want.
-So I develop this plugin to preview many svgs at one time in chrome.
+Due to windows is not able to preview svg and gif by default, so if we have many svgs and gifs in folder, it's hard to find which one we want.
+So I develop this plugin to preview many svgs and gifs at one time in chrome.
 
 ## INSTALL
 
