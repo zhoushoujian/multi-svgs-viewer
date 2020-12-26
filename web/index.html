@@ -5,14 +5,29 @@
   <title>Multiple SVGS And GIF Viewer</title>
   <meta charset="utf-8" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
   <link rel="shortcut icon" href="./favicon.ico">
   <link rel="stylesheet" type="text/css" href="./main.css">
+  <style>
+    @media only screen and (max-width: 1440px) {
+      .svg-viewer-chrome-plugin-css-style-show-svg-header-container {
+        height: auto;
+      }
+      .svg-viewer-chrome-plugin-css-style-tool {
+        position: relative;
+        right: 0;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <div id="root"></div>
-  <script type="text/javascript" src="./vendors-main.bundle.js"></script>
-  <script type="text/javascript" src="./main.bundle.js"></script>
+
 </body>
+
+<script type="text/javascript" src="./vendors-main.bundle.js"></script>
+<script type="text/javascript" src="./main.bundle.js"></script>
 
 </html>
