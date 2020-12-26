@@ -59,6 +59,7 @@ function MyDropzone() {
   });
 
   useEffect(() => {
+    console.log("multi-svgs-viewer actived");
     if (document.querySelector('body')) {
       (document.querySelector('body') as any).style.overflow = "hidden";
     }

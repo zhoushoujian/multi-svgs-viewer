@@ -1,5 +1,6 @@
 #svg-viewer-chrome-plugin {
   background-color: #fffef8;
+  overflow: hidden;
 }
 
 .svg-viewer-chrome-plugin-css-style-plugin-header-init {
@@ -43,7 +44,7 @@
   padding: 15px;
   box-sizing: border-box;
   width: 100vw;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 90px);
   padding-bottom: 200px;
   text-align: center;
   font-size: 20px;

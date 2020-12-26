@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Main from "./main";
 
-const debug = false;
+const generateForHtml = false;
 
 window.onload = () => {
   if (location.host === "newtab"
@@ -10,7 +10,7 @@ window.onload = () => {
     || location.href === "https://www.zhoushoujian.com/svg/"
     // eslint-disable-next-line no-useless-escape
     || /chrome\-extension/.test(location.origin)
-    || debug) {
+    || generateForHtml) {
     const ele = document.createElement('div');
     ele.id = 'svg-viewer-chrome-plugin';
     document.body.appendChild(ele);
