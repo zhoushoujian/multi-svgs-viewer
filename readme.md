@@ -1,4 +1,4 @@
-# multi-svg-and-gif-viewer
+# multi-svgs-viewer
 
 ## BACKGROUND
 

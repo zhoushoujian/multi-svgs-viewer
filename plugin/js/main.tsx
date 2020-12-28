@@ -38,6 +38,7 @@ const btnArray = [
 const availableMimeArray = ['image/svg+xml', 'image/gif', 'image/jpeg', 'image/bmp', 'image/x-icon', 'image/png'];
 
 let initState = true;
+let mimeObjectInfo = {};
 
 function MyDropzone() {
   const [availableFiles, setAvailableFiles] = useState<any[]>([]);
@@ -89,7 +90,13 @@ function MyDropzone() {
   const onDrop = useCallback(
     acceptedFiles => {
       console.log('selected files: ', acceptedFiles);
-      acceptedFiles = acceptedFiles.filter(item => availableMimeArray.indexOf(item.type) !== -1);
+      acceptedFiles = acceptedFiles.filter(item => {
+        const mimeInfo = mimeObjectInfo[item.type];
+        mimeObjectInfo[item.type] = mimeInfo ? mimeInfo + 1 : 1;
+        return availableMimeArray.indexOf(item.type) !== -1;
+      });
+      console.log("mime count", mimeObjectInfo);
+      mimeObjectInfo = {};
       acceptedFiles.forEach(item => {
         if (item.type === 'image/svg+xml') {
           item.visible = selectedBtns.svgBtn ? true : false;
