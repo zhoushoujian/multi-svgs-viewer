@@ -1,6 +1,6 @@
 {
   "name": "multi-svgs-viewer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "preview many svgs in chrome",
   "scripts": {
     "codecheck": "eslint plugin/js/*.tsx",
@@ -26,7 +26,8 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-dropzone": "^10.2.1"
+    "react-dropzone": "^10.2.1",
+    "react-virtualized": "^9.22.3"
   },
   "author": "zhoushoujian",
   "license": "MIT",

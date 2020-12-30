@@ -88,15 +88,14 @@
   text-align: center;
   font-weight: 600;
   margin-top: 10px;
-  width: 200px;
+  width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
 .svg-viewer-chrome-plugin-css-style-react-svg {
-  width: 150px;
-  height: 150px;
+  width: 100%;
 }
 
 .svg-viewer-chrome-plugin-css-style-upload-button-container {
@@ -150,6 +149,7 @@
   right: 10px;
   align-items: center;
   font-weight: 600;
+  user-select: none;
 }
 
 .svg-viewer-chrome-plugin-css-style-file-type-button {
@@ -164,4 +164,19 @@
   margin-right: 10px;
   background-color: #ccc;
   color: #fff;
+}
+
+@media only screen and (max-width: 1440px) {
+  .svg-viewer-chrome-plugin-css-style-show-svg-header-container {
+    height: auto;
+  }
+  .svg-viewer-chrome-plugin-css-style-multi-svg-container-used {
+    justify-content: center;
+  }
+  .svg-viewer-chrome-plugin-css-style-tool {
+    position: relative;
+    right: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }

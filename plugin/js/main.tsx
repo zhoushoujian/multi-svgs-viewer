@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
+import Virtualized from './virtualized';
 
 const btnArray = [
   {
@@ -154,11 +155,12 @@ function MyDropzone() {
   };
 
   const availableFilesVisible = availableFiles.filter(item => item.visible);
+  const filesLength = availableFilesVisible.length;
   return (
     <div className="svg-viewer-chrome-plugin-css-style-show-svg-container">
       <div className="svg-viewer-chrome-plugin-css-style-show-svg-header-container">
         <h2 className="svg-viewer-chrome-plugin-css-style-plugin-header-content">
-          Multiple SVG And GIF Viewer {availableFilesVisible.length ? `( ${availableFilesVisible.length} )` : ""}
+          Multiple SVGS Viewer {filesLength ? `( ${filesLength} )` : ""}
         </h2>
         <div className="svg-viewer-chrome-plugin-css-style-tool">
           {
@@ -204,30 +206,58 @@ function MyDropzone() {
         : (<div
           title={`${isDragActive
             ? 'Drop the files here ...'
-            : availableFilesVisible.length
+            : filesLength
               ? ""
               : 'Drag some files here, or click to select files'}`}
           className="svg-viewer-chrome-plugin-css-style-multi-svg-container-used">
-          {availableFilesVisible.map((file, index) => (
-            <div
-              className="svg-viewer-chrome-plugin-css-style-svg-items"
-              style={{ width: container.width, height: container.height }}
-              key={index}>
-              <div
-                className="svg-viewer-chrome-plugin-css-style-filename"
-                style={{ width: container.width }}
-                title={file.name}>
-                {file.name}
-              </div>
-              <img
-                title={file.name}
-                alt={file.name}
-                style={{ width: content.width, height: content.height }}
-                className="svg-viewer-chrome-plugin-css-style-react-svg"
-                src={window.webkitURL.createObjectURL(file)}
-              />
-            </div>
-          ))}
+          {
+            filesLength > 10000
+              ? <Virtualized
+                height={window.innerHeight - 400}
+                columnWidth={container.width}
+                cellCount={filesLength}
+                childElementFunc={(index, style) => {
+                  const file = availableFilesVisible[index];
+                  if (!file) return null;
+                  return (
+                    <div
+                      className="svg-viewer-chrome-plugin-css-style-svg-items"
+                      style={{ ...style, width: container.width, height: container.height }}>
+                      <div
+                        className="svg-viewer-chrome-plugin-css-style-filename"
+                        title={file.name}>
+                        {file.name}
+                      </div>
+                      <img
+                        title={file.name}
+                        alt={file.name}
+                        style={{ height: content.height }}
+                        className="svg-viewer-chrome-plugin-css-style-react-svg"
+                        src={window.webkitURL.createObjectURL(file)}
+                      />
+                    </div>
+                  );
+                }} />
+              : availableFilesVisible.map((file, index) => (
+                <div
+                  className="svg-viewer-chrome-plugin-css-style-svg-items"
+                  style={{ width: container.width, height: container.height }}
+                  key={index}>
+                  <div
+                    className="svg-viewer-chrome-plugin-css-style-filename"
+                    title={file.name}>
+                    {file.name}
+                  </div>
+                  <img
+                    title={file.name}
+                    alt={file.name}
+                    style={{ height: content.height }}
+                    className="svg-viewer-chrome-plugin-css-style-react-svg"
+                    src={window.webkitURL.createObjectURL(file)}
+                  />
+                </div>
+              ))
+          }
           <div className="svg-viewer-chrome-plugin-css-style-svg-items svg-viewer-chrome-plugin-css-style-upload-button-content">
             <div {...getRootProps()}>
               <input {...getInputProps()} />
