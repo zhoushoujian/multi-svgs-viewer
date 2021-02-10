@@ -249,7 +249,7 @@ function MyDropzone() {
                     {file.name}
                   </div>
                   <img
-                    title={file.name}
+                    title={file.path}
                     alt={file.name}
                     style={{ height: content.height }}
                     className="svg-viewer-chrome-plugin-css-style-react-svg"
