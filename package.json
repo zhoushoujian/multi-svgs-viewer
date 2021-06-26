@@ -27,6 +27,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^10.2.1",
+    "react-toastify": "^7.0.4",
     "react-virtualized": "^9.22.3"
   },
   "author": "zhoushoujian",

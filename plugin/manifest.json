@@ -17,20 +17,23 @@
   "content_scripts": [
     {
       "all_frames": true,
-      "matches": ["<all_urls>"],
+      "matches": [
+        "<all_urls>"
+      ],
       "js": [
         "js/main.bundle.js",
         "js/vendors-main.bundle.js"
       ],
       "css": [
-        "css/main.css"
+        "css/main.css",
+        "css/ReactToastify.min.css"
       ],
       "run_at": "document_start"
     }
   ],
-	"chrome_url_overrides": {
-		"newtab": "newtab.html"
-	},
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
   "permissions": [
     "contextMenus",
     "tabs",
@@ -40,7 +43,8 @@
   ],
   "web_accessible_resources": [
     "js/main.tsx",
-    "js/index.tsx"
+    "js/index.tsx",
+    "js/masonry.tsx"
   ],
   "homepage_url": "https://www.zhoushoujian.com/svg"
 }
