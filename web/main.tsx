@@ -104,15 +104,21 @@ function MyDropzone() {
   );
 
   const dealAvailableFiles = files => {
-    toast.info('Loading, please wait', {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined
-    });
+    const length = files.length;
+    toast.info(
+      length > 100
+        ? `Loading ${length} files, it maybe cost much time, please wait for patient...`
+        : `Loading ${length} files, please wait...`,
+      {
+        position: 'top-right',
+        autoClose: length > 100 ? 10000 : 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined
+      }
+    );
     return Promise.all(
       files.map(file => {
         return new Promise(res => {
