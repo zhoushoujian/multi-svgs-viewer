@@ -61,6 +61,7 @@ const selectedBtns = {
 let mimeObjectInfo = {};
 const picWidth = 200;
 const initState = 'Drag some files here, or click to select files';
+const MAX_GROUP_RENDER_NUMBER = 500;
 
 function MyDropzone() {
   const headerRef = useRef(null as any);
@@ -106,64 +107,86 @@ function MyDropzone() {
       progress: undefined
     });
     mimeObjectInfo = {};
-    acceptedFiles.forEach(item => {
-      if (item.type === 'image/svg+xml') {
-        item.visible = selectedBtns.svgBtn ? true : false;
-      } else if (item.type === 'image/gif') {
-        item.visible = selectedBtns.gifBtn ? true : false;
-      } else if (item.type === 'image/jpeg') {
-        item.visible = selectedBtns.jpgBtn ? true : false;
-      } else if (item.type === 'image/bmp') {
-        item.visible = selectedBtns.bmpBtn ? true : false;
-      } else if (item.type === 'image/x-icon') {
-        item.visible = selectedBtns.iconBtn ? true : false;
-      } else if (item.type === 'image/png') {
-        item.visible = selectedBtns.pngBtn ? true : false;
+    const arrGroup: any = [[]];
+    const allAvailableFiles = [...availableFiles, ...acceptedFiles];
+    allAvailableFiles.forEach(item => {
+      if (!arrGroup[arrGroup.length - 1]) {
+        arrGroup[arrGroup.length - 1] = [];
+      } else if (arrGroup[arrGroup.length - 1].length >= MAX_GROUP_RENDER_NUMBER) {
+        arrGroup[arrGroup.length] = [];
       }
+      arrGroup[arrGroup.length - 1].push(item);
     });
-    console.log('available files: ', acceptedFiles);
-    return dealAvailableFiles([...availableFiles, ...acceptedFiles]);
+    return dealAvailableFiles(arrGroup, allAvailableFiles.length);
   };
 
-  const dealAvailableFiles = files => {
-    return Promise.all(
-      files.map((file, index) => {
-        return new Promise(res => {
-          const reader = new FileReader();
-          reader.onload = function (e: any) {
-            const data = e.target.result;
-            //加载图片获取图片真实宽度和高度
-            const image = new Image();
-            image.onload = function () {
-              const height = image.height * (picWidth / image.width);
-              Object.assign(file, { width: picWidth, height });
-              image.width = picWidth;
-              image.height = height;
-              if (file.size > 1 * 1024 * 1024) {
-                const src = compress(image, 0.4, file.type);
-                Object.assign(file, { src });
-                // console.info(`正在加载第${index + 1}张图片 - ${file.name}...`);
-                setUploadState(`Loading ${index + 1} pictures - ${file.path}...`);
+  const dealAvailableFiles = async (filesGroup, totalNumber) => {
+    try {
+      let loadedFiles: any = [];
+      for (const groupIndex in filesGroup) {
+        if (Object.prototype.hasOwnProperty.call(filesGroup, groupIndex)) {
+          let max = 0;
+          const files = filesGroup[groupIndex];
+          console.info('groupIndex', groupIndex);
+          // eslint-disable-next-line no-await-in-loop
+          await Promise.all(
+            files.map((file, index) => {
+              return new Promise(res => {
+                if (file.width && file.height) {
+                  return res(null);
+                } else {
+                  const reader = new FileReader();
+                  reader.onload = function (e: any) {
+                    const data = e.target.result;
+                    //加载图片获取图片真实宽度和高度
+                    const image = new Image();
+                    image.onload = function () {
+                      const height = image.height * (picWidth / image.width);
+                      Object.assign(file, { width: picWidth, height });
+                      image.width = picWidth;
+                      image.height = height;
+                      if (file.size > 1 * 1024 * 1024) {
+                        const src = compress(image, 0.4, file.type);
+                        Object.assign(file, { src });
+                        if (index > max) {
+                          max = index;
+                          setUploadState(
+                            `Loading ${
+                              index + 1 + Number(groupIndex) * MAX_GROUP_RENDER_NUMBER
+                            } pictures - ${file.path}...`
+                          );
+                        }
+                      }
+                      res(null);
+                    };
+                    image.src = data;
+                  };
+                  reader.readAsDataURL(file);
+                }
+              }).catch(err => {
+                console.error('Load error inner err', err, 'file', file);
+                alert('Load error: ' + file.path);
+              });
+            })
+          )
+            // eslint-disable-next-line no-loop-func
+            .then(() => {
+              loadedFiles = [...loadedFiles, ...files];
+              if (loadedFiles.length >= totalNumber) {
+                setUploadState(initState);
               }
-              res(null);
-            };
-            image.src = data;
-          };
-          reader.readAsDataURL(file);
-        }).catch(err => {
-          console.error('Load error inner err', err, 'file', file);
-          alert('Load error: ' + file.name);
-        });
-      })
-    )
-      .then(() => {
-        setUploadState(initState);
-        setAvailableFiles(files);
-      })
-      .catch(err => {
-        console.error('Load error err', err);
-        alert('Load error');
-      });
+              setAvailableFiles(loadedFiles);
+            })
+            .catch(err => {
+              console.error('Load error err', err);
+              alert('Load error');
+            });
+        }
+      }
+    } catch (err) {
+      console.error('Load error out err', err);
+      alert('Load error');
+    }
   };
 
   const compress = (image, quality, type) => {
@@ -178,8 +201,7 @@ function MyDropzone() {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  const availableFilesVisible = availableFiles.filter(item => item.visible);
-  const filesLength = availableFilesVisible.length;
+  const filesLength = availableFiles.length;
   return (
     <div className="svg-viewer-chrome-plugin-css-style-show-svg-container">
       <div className="svg-viewer-chrome-plugin-css-style-show-svg-header-container" ref={headerRef}>
@@ -228,7 +250,7 @@ function MyDropzone() {
           columnWidth={picWidth + 80}
           cellCount={filesLength}
           childElementFunc={(index, style) => {
-            const file = availableFilesVisible[index];
+            const file = availableFiles[index];
             if (file) {
               return (
                 <div
@@ -249,8 +271,8 @@ function MyDropzone() {
               );
             } else {
               console.error(
-                'render warn none file object, availableFilesVisible, index',
-                availableFilesVisible,
+                'render warn none file object, availableFiles, index',
+                availableFiles,
                 index
               );
               return null;

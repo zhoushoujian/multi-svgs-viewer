@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Main from './main';
 
-const generateForHtml = false;
+const generateForHtml = true;
 
 window.onload = () => {
   if (
