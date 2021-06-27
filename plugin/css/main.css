@@ -111,15 +111,6 @@
   cursor: pointer;
 }
 
-.svg-viewer-chrome-plugin-css-style-plus {
-  text-align: center;
-  font-size: 36px;
-  display: flex;
-  align-items: center;
-  margin-top: -8px;
-  height: 42px;
-}
-
 .svg-viewer-chrome-plugin-css-style-plus-text {
   text-align: center;
   font-size: 16px;
